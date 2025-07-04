@@ -11,4 +11,6 @@ public interface AddressService {
 
 	List<Address> fetchUsersByAdress(String name);
 
+	Address updateAdressByAdressID(int adressID, AddressRequest addressRequest);
+
 }

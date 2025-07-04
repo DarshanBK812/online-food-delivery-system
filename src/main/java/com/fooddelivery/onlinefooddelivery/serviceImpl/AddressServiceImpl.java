@@ -49,4 +49,24 @@ public class AddressServiceImpl implements AddressService {
 
 		return address.get();
 	}
+
+	// Update the adress by id
+	@Override
+	public Address updateAdressByAdressID(int adressID, AddressRequest addressRequest) {
+		Address address = addressRepo.findById(adressID)
+				.orElseThrow(() -> new NotFoundException("Adress is not found Plz check the id"));
+
+		User user = userRepo.findById(addressRequest.getUserId())
+				.orElseThrow(() -> new NotFoundException("User is not found Plz check the id"));
+
+		address.setId(adressID);
+		address.setStreet(addressRequest.getStreet());
+		address.setCity(addressRequest.getCity());
+		address.setState(addressRequest.getState());
+		address.setPincode(addressRequest.getPincode());
+		address.setUser(user);
+		addressRepo.save(address);
+		return address;
+
+	}
 }

@@ -16,6 +16,7 @@ public class AddressResponse {
 	private String msg;
 	private String userName;
 	private AddressRequest addressRequest;
+	
 	public String getMsg() {
 		return msg;
 	}

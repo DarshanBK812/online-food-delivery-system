@@ -17,7 +17,6 @@ public class OrderResponse {
 	private String msg;
 //	private int orderId;
 	private String status;
-	private Address address;
 
 	public OrderResponse() {
 		// TODO Auto-generated constructor stub
@@ -37,15 +36,6 @@ public class OrderResponse {
 
 	public void setStatus(String status) {
 		this.status = status;
-	}
-
-
-	public Address getAddress() {
-		return address;
-	}
-
-	public void setAddress(Address address) {
-		this.address = address;
 	}
 
 }

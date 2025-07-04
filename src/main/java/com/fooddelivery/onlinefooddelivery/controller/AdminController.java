@@ -15,9 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.fooddelivery.onlinefooddelivery.dto.LoginRequest;
+import com.fooddelivery.onlinefooddelivery.dto.UpdateUserRequest;
+import com.fooddelivery.onlinefooddelivery.dto.UserRegisterRequest;
+import com.fooddelivery.onlinefooddelivery.entity.Order;
 import com.fooddelivery.onlinefooddelivery.entity.User;
 import com.fooddelivery.onlinefooddelivery.response.UserResponse;
 import com.fooddelivery.onlinefooddelivery.response.fetchUsersByAdressResposnce;
+import com.fooddelivery.onlinefooddelivery.service.OrderService;
 import com.fooddelivery.onlinefooddelivery.service.UserService;
 
 @RestController
@@ -27,6 +31,10 @@ public class AdminController {
 	@Autowired
 	UserService userService;
 
+	@Autowired
+	OrderService orderService;
+
+	// Login to admine page
 	@PostMapping("/dashboard")
 	public ResponseEntity<?> adminDashboard(@RequestBody LoginRequest loginRequest) {
 
@@ -41,6 +49,32 @@ public class AdminController {
 				user.getName(), user.getEmail(), user.getRole());
 
 		return ResponseEntity.ok(response);
+	}
+
+	// Update user account Bycredentials(email and password)
+
+	@PostMapping("/updateUserBycredentials")
+	public ResponseEntity<?> updateUserBycredentials(@RequestBody UpdateUserRequest updateUserRequest) {
+
+		LoginRequest loginRequest = updateUserRequest.getLoginRequest();
+		UserRegisterRequest registerRequest = updateUserRequest.getRegisterRequest();
+
+		userService.updateUserBycredentials(loginRequest, registerRequest);
+
+		UserResponse userResponse = new UserResponse("Update successfully : ", registerRequest.getName(),
+				registerRequest.getEmail(), registerRequest.getRole());
+
+		return ResponseEntity.ok(userResponse);
+
+	}
+
+	// delete admine account
+	@PostMapping("/deleteAccountByCredentials")
+	public ResponseEntity<?> deleteAccountByCredentials(@RequestBody LoginRequest loginRequest) {
+
+		userService.deleteAccountByCredentials(loginRequest);
+
+		return ResponseEntity.ok("Account has been deleted from the DB");
 	}
 
 	// Fetch all the customer By admine
@@ -64,6 +98,13 @@ public class AdminController {
 		fetchUsersByAdressResposnce.setNames(customers);
 
 		return ResponseEntity.ok(fetchUsersByAdressResposnce);
+	}
+
+	@PostMapping("/fetchAllOrdersByAdmine")
+	public ResponseEntity<?> fetchAllOrdersByAdmine(@RequestBody LoginRequest loginRequest) {
+
+		return orderService.fetchAllOrdersByAdmine(loginRequest);
+
 	}
 
 }

@@ -2,7 +2,7 @@ package com.fooddelivery.onlinefooddelivery.entity;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-
+import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -12,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -37,6 +38,10 @@ public class Order {
 	@JoinColumn(name = "address_id")
 	private Address address; // ✅ field is 'address', not 'Address'
 
+	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+	private List<OrderItem> items;
+
+	// Add getters and setters
 
 	public int getId() {
 		return id;
@@ -76,6 +81,14 @@ public class Order {
 
 	public void setAddress(Address address) {
 		this.address = address;
+	}
+
+	public List<OrderItem> getItems() {
+		return items;
+	}
+
+	public void setItems(List<OrderItem> items) {
+		this.items = items;
 	}
 
 }

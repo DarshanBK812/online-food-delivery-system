@@ -1,4 +1,4 @@
-package com.fooddelivery.onlinefooddelivery.response;
+package com.fooddelivery.onlinefooddelivery.controller;
 
 import java.util.List;
 
