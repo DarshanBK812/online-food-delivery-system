@@ -1,88 +1,93 @@
-# 🍔 Online Food Delivery System
+🍽️ Online Food Delivery System
 
-A full-stack Java Spring Boot application designed to manage food orders and deliveries with role-based access for Admins and Customers.
-
----
-
-## 🚀 Features
-
-- 🔐 **User Authentication & Authorization** (JWT-based)
-- 👤 **Role-Based Access**: Admin & Customer
-- 🧾 **Order Management**: Place, view, and manage orders
-- 🏠 **Address Management**: Add and fetch customer addresses
-- 📦 **Admin Operations**: View all customers, all orders
-- 💡 **Exception Handling**: Centralized with custom exceptions
-- ✅ **RESTful API Design** with DTO and Response wrapping
+An end-to-end **Spring Boot** backend project that simulates the operations of an online food delivery platform, including **role-based access (Admin & Customer)**, **JWT authentication**, restaurant and food item management, **cart**, **order placement**, and secure user operations.
 
 ---
 
-## 🧠 Project Architecture
+## 🚀 Tech Stack
 
-### `src/main/java/com.fooddelivery.onlinefooddelivery`
-
-#### ✅ Core Components
-
-- **`OnlineFoodDeliverySystemApplication.java`**  
-  Main Spring Boot entry point
-
-#### 🔐 `config/`
-- `SecurityConfig.java` – Configures Spring Security and JWT filters
-
-#### 🎮 `controller/`
-- `AddressController.java` – Manage customer addresses
-- `AdminController.java` – Admin-only actions
-- `CustomerController.java` – Customer actions
-- `OrderController.java` – Place/view orders
-- `UserController.java` – Signup/login/update
-
-#### 🧠 `service/` & `servicelmpl/`
-- Interfaces and implementations:
-  - `UserService`, `AddressService`, `OrderService`
-
-#### 🧬 `entity/`
-- `User.java`, `Address.java`, `Order.java` – JPA entities with mappings
-
-#### 📩 `dto/`
-- DTOs for request payloads:
-  - `UserRegisterRequest`, `LoginRequest`, `OrderRequest`, etc.
-
-#### 📥 `response/`
-- Custom response classes: 
-  - `UserResponse`, `OrderResponse`, `SaveAddressResponse`, etc.
-
-#### 💣 `exception/`
-- `ExistedUser.java`, `NotFoundException.java`, and `GlobalExceptionHandler.java`
-
-#### 🗃 `dao/`
-- JPA repositories: `UserRepo`, `OrderRepo`, `AddressRepo`
+- **Backend:** Java, Spring Boot
+- **ORM:** Spring Data JPA (Hibernate)
+- **Database:** MySQL
+- **Security:** Spring Security + JWT (JSON Web Token)
+- **API Testing:** Postman
+- **Build Tool:** Maven
 
 ---
 
-## 📦 Technologies Used
+## 👥 Roles and Functionalities
 
-- **Java 17**
-- **Spring Boot**
-- **Spring Security + JWT**
-- **Spring Data JPA (Hibernate)**
-- **MySQL**
-- **Postman** for API testing
-- **Maven** for dependency management
+### 👨‍💼 Admin
+
+- Register/Login
+- Add & Manage Restaurants
+- Add Food Items to Restaurants
+- View Restaurants and Food Inventory
+
+### 👤 Customer
+
+- Register/Login (JWT Token Auth)
+- View Available Food Items by Name
+- Add Food Items to Cart
+- Place Orders from Cart
+- View Order History
+- Update/Delete User Profile
 
 ---
 
-## 📂 Folder Structure
+## 🔐 Authentication
 
-onlinefooddelivery/
+- **Login generates JWT Token**
+- Token required for accessing secured endpoints
+- Role-based authorization (Admin vs Customer)
+
+---
+
+## 🛒 Order Flow
+
+1. **Customer** adds food items to **Cart**
+2. Places an **Order**
+3. Items from cart are converted into **OrderItems**
+4. Order is saved with timestamp, status, and address
+
+---
+
+## 🔄 Entity Relationships
+
+| Entity        | Relationship                          |
+|---------------|----------------------------------------|
+| User ↔ Order         | One-to-Many (user can place many orders) |
+| Order ↔ OrderItem    | One-to-Many                      |
+| Cart ↔ FoodItem      | Many-to-One                      |
+| Restaurant ↔ FoodItem| One-to-Many                      |
+| Cart ↔ User          | One-to-One                       |
+
+---
+
+## 📦 Modules
+
+- **User Module:** Registration, Login, Update, Delete
+- **Restaurant Module:** Create & fetch restaurants
+- **FoodItem Module:** Add/view food items
+- **Cart Module:** Add/view items
+- **Order Module:** Place order, view history
+- **JWT Auth Module:** Token validation and filtering
+
+---
+
+## 📁 Project Structure
+
+com.fooddelivery.onlinefooddelivery
+│
 ├── controller/
 ├── service/
-├── servicelmpl/
+├── serviceImpl/
 ├── dto/
-├── response/
 ├── entity/
-├── config/
-├── dao/
+├── repository/
+├── response/
 ├── exception/
-└── OnlineFoodDeliverySystemApplication.java
+└── util/ (JWT utilities)
 
 yaml
 Copy
@@ -90,36 +95,44 @@ Edit
 
 ---
 
-## 🧪 API Testing
+## 🧪 Testing (Postman)
 
-- All APIs tested with Postman
-- JWT token must be included in headers after login
-- Proper status codes and response structures returned
+- Tested all APIs using Postman
+- Token added to `Authorization: Bearer <token>` header
+- Example requests include:
+  - Register/Login
+  - Add to Cart
+  - Place Order
+  - View Restaurants by Food Name
 
 ---
 
-## ✅ Setup Instructions
+## 📌 Sample Postman Collection (Optional)
 
-1. Clone the repo  
-   `git clone https://github.com/DarshanBK812/online-food-delivery-system.git`
+> [Click here to download Postman collection](#) *(replace with actual link if available)*
 
-2. Open in **Eclipse** or **IntelliJ**
+---
 
-3. Configure `application.properties`:
-   ```properties
-   spring.datasource.url=jdbc:mysql://localhost:3306/your_db
-   spring.datasource.username=root
-   spring.datasource.password=your_password
-   jwt.secret=your_jwt_secret
-Run the project from OnlineFoodDeliverySystemApplication.java
+## 💡 What I Learned
 
-🙋‍♂️ Author
-Darshan B K
-LinkedIn | Java Developer | Spring Boot Enthusiast
+- Clean layering: Controller → Service → Repository
+- DTO pattern and separation of concerns
+- Secure REST API with JWT
+- Managing One-to-Many and Many-to-One relationships
+- Transactional order processing
+- Error handling with `@ControllerAdvice`
 
-📌 License
-This project is for academic and learning purposes.
+---
 
-yaml
-Copy
-Edit
+## 📎 Author
+
+**Darshan B K**  
+Full Stack Java Developer | 2025 Graduate  
+[LinkedIn](https://www.linkedin.com/in/darshan-b-k-a7b501298)  
+[GitHub](https://github.com/your-github-username)
+
+---
+
+## 📌 Note
+
+This project is for learning/demo purposes and does not include a frontend UI. It can be integrated with any frontend (Angular, React, etc.) using the exposed REST APIs.
