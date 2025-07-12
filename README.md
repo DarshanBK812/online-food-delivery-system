@@ -109,7 +109,7 @@ Edit
 
 ## 📌 Sample Postman Collection (Optional)
 
-> [Click here to download Postman collection](#) *(replace with actual link if available)*
+> [Click here to download Postman collection](#) *(Coming soon)*
 
 ---
 
